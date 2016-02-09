@@ -1,0 +1,1 @@
+* * * * * ubuntu /bin/bash /home/ubuntu/apps/austin16/repository/run_on_server.sh fab $DEPLOYMENT_TARGET cron_jobs.test >/var/log/austin16/crontab.log 2>&1

@@ -3,15 +3,23 @@
 """
 Commands that update or process the application data.
 """
+import csv
 from datetime import datetime
 import json
+from smartypants import smartypants
+import os
+from time import sleep
 
-from fabric.api import task
+import boto
+from fabric.api import local, require, task
 from facebook import GraphAPI
+import requests
+from smartypants import smartypants
 from twitter import Twitter, OAuth
 
 import app_config
 import copytext
+from flat import deploy_file
 
 @task(default=True)
 def update():
@@ -19,6 +27,137 @@ def update():
     Stub function for updating app-specific data.
     """
     #update_featured_social()
+    update_songs()
+
+@task
+def update_songs(verify='false'):
+    local('curl -s -o data/songs.csv "https://docs.google.com/spreadsheets/d/1qzZl71B_XyvyE3XY6Kg7x5n6rcJwE8yY_9RTAvxL8h8/pub?gid=0&single=true&output=csv"')
+
+    # Hack: for some reason downloaded file does not exist yet without this
+    sleep(1)
+
+    output = clean_songs(verify == 'true')
+
+    with open('data/songs.json', 'w') as f:
+        json.dump(output, f)
+
+@task
+def clean_songs(verify):
+    output = {}
+    unique_audio = []
+    unique_song_art = []
+    unique_song_title = []
+
+    with open('data/songs.csv') as f:
+        rows = csv.DictReader(f)
+
+        for row in rows:
+            stripped_row = {}
+
+            for name, value in row.items():
+                try:
+                    stripped_row[name] = value.strip()
+                except AttributeError:
+                    print value
+                    raise
+
+            row = stripped_row
+
+            print '%s - %s' % (row['artist'], row['title'])
+
+            if row['song_art']:
+                name, ext = os.path.splitext(row['song_art'])
+                row['song_art'] = '%s-s500%s' % (name, ext)
+
+            if row['title']:
+                row['title'] = smartypants(row['title'])
+
+            if row['artist']:
+                row['artist'] = smartypants(row['artist'])
+
+            # Verify links
+            if verify:
+                try:
+                    stream_url = 'http://pd.npr.org/anon.npr-mp3%s.mp3' % row['stream_url']
+                    stream_request = requests.head(stream_url)
+
+                    if stream_request.status_code != 200:
+                        print '--> %s The stream url is invalid: %s' % (stream_request.status_code, stream_url)
+
+                    download_url = row['download_url']
+                    download_request = requests.head(download_url)
+
+                    if download_request.status_code != 200:
+                        print '--> %s The download URL is invalid: %s' % (download_request.status_code, download_url)
+
+                    song_art_link = 'http://www.npr.org%s' % row['song_art']
+                    song_art_request = requests.head(song_art_link)
+
+                    if song_art_request.status_code != 200:
+                        print '--> %s The song art URL is invalid: %s' % (song_art_request, song_art_link)
+                except:
+                    print '--> request.head failed'
+
+            # Verify tags
+            if verify:
+                if row['download_url'] in unique_audio:
+                    print '--> Duplicate audio url: %s' % row['download_url']
+                else:
+                    unique_audio.append(row['download_url'])
+
+                if row['song_art'] in unique_song_art:
+                    print '--> Duplicate song_art url: %s' % row['song_art']
+                else:
+                    unique_song_art.append(row['song_art'])
+
+                if row['title'] in unique_song_title:
+                    print '--> Duplicate title: %s' % row['title']
+                else:
+                    unique_song_title.append(row['title'])
+
+            if row['download_url']:
+                filename = row['download_url'].split('/')[-1]
+                row['download_url'] = '/%s/downloads/%s' % (app_config.PROJECT_SLUG, filename)
+
+            output[row['id']] = row
+
+    return output
+
+@task
+def update_downloads():
+    require('settings', provided_by=['production', 'staging'])
+
+    with open('data/songs.csv') as f:
+        rows = csv.DictReader(f)
+
+        for row in rows:
+            if not row['download_url']:
+                print 'Missing download url'
+                continue
+
+            filename = row['download_url'].split('/')[-1]
+
+            print filename
+
+            download_request = requests.get(row['download_url'], stream=True)
+
+            with open('downloads/%s' % filename, 'w') as f:
+                for chunk in download_request.iter_content(chunk_size=1024):
+                    if chunk:
+                        f.write(chunk)
+                        f.flush()
+
+            s3 = boto.connect_s3()
+
+            deploy_file(
+                s3,
+                'downloads/%s' % filename,
+                '%s/downloads/%s' % (app_config.PROJECT_SLUG, filename),
+                headers={
+                    'Cache-Control': 'max-age=%i' % app_config.ASSETS_MAX_AGE,
+                    'Content-Disposition': 'attachment; filename="%s"' % filename
+                }
+            )
 
 @task
 def update_featured_social():
@@ -69,7 +208,7 @@ def update_featured_social():
 
             if media['type'] == 'photo' and not photo:
                 photo = {
-                    'url': media['media_url']
+                    'url': media['download_url']
                 }
 
         for url in tweet['entities'].get('urls', []):

@@ -3,7 +3,8 @@
  */
 
 var _gaq = _gaq || [];
-var _sf_async_config={};
+var _sf_async_config = {};
+var _comscore = _comscore || [];
 
 var ANALYTICS = (function () {
 
@@ -15,10 +16,10 @@ var ANALYTICS = (function () {
      * Google Analytics
      */
     var setupGoogle = function() {
-        _gaq.push(['_setAccount', APP_CONFIG.GOOGLE_ANALYTICS.ACCOUNT_ID]);
-        _gaq.push(['_setDomainName', APP_CONFIG.GOOGLE_ANALYTICS.DOMAIN]);
+        _gaq.push(['_setAccount', APP_CONFIG.NPR_GOOGLE_ANALYTICS.ACCOUNT_ID]);
+        _gaq.push(['_setDomainName', APP_CONFIG.NPR_GOOGLE_ANALYTICS.DOMAIN]);
         //_gaq.push(['_setCustomVar', 1, 'BC', '', 3]);
-        _gaq.push(['_setCustomVar', 2, 'Topics', APP_CONFIG.GOOGLE_ANALYTICS.TOPICS, 3]);
+        _gaq.push(['_setCustomVar', 2, 'Topics', APP_CONFIG.NPR_GOOGLE_ANALYTICS.TOPICS, 3]);
         //_gaq.push(['_setCustomVar', 3, 'Program ID', '', 3]);
         //_gaq.push(['_setCustomVar', 3, 'Localization', '', 1]);
         _gaq.push(['_setCustomVar', 4, 'OrgID', '1', 3]);
@@ -32,7 +33,7 @@ var ANALYTICS = (function () {
 
         _gaq.push(['_setCustomVar', 6, 'Orientation', orientation, 3]);
 
-        var viewportSize = $(window).width();
+        var viewportSize = document.body.clientWidth;
         var viewportGrouping = '1760 and higher';
 
         if (viewportSize < 481) {
@@ -63,18 +64,28 @@ var ANALYTICS = (function () {
 
         _gaq.push(['_trackPageview']);
 
+        // Old GA: NPR.org
         (function() {
             var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
-    }
+
+        // New GA: NPR Visuals
+        (function(i,s,o,g,r,a,m) {
+            i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', APP_CONFIG.VIZ_GOOGLE_ANALYTICS.ACCOUNT_ID, 'auto');
+        ga('send', 'pageview');
+     }
 
     /*
      * Comscore
      */
     var setupComscore = function() {
-        var _comscore = _comscore || [];
         _comscore.push({ c1: "2", c2: "17691522" });
 
         (function() {
@@ -122,44 +133,25 @@ var ANALYTICS = (function () {
         })();
     }
 
-    var setupAll = function() {
-        setupGoogle();
-        setupComscore();
-        setupNielson();
-        setupChartbeat();
-    }
-
     /*
      * Event tracking.
      */
-    var trackEvent = function(eventName, label, value, custom1, custom2) {
-        var args = ['_trackEvent', APP_CONFIG.PROJECT_SLUG];
-
-        args.push(eventName);
+    var trackEvent = function(eventName, label, value) {
+        var eventData = {
+            'hitType': 'event',
+            'eventCategory': APP_CONFIG.PROJECT_SLUG,
+            'eventAction': eventName
+        }
 
         if (label) {
-            args.push(label);
-        } else if (value || custom1 || custom2) {
-            args.push('');
+            eventData['eventLabel'] = label;
         }
 
         if (value) {
-            args.push(value);
-        } else if (custom1 || custom2) {
-            args.push(0);
+            eventData['eventValue'] = value
         }
 
-        if (custom1) {
-            args.push(custom1)
-        } else if (custom2) {
-            args.push('');
-        }
-
-        if (custom2) {
-            args.push(custom2);
-        }
-
-        _gaq.push(args);
+        ga('send', eventData);
     }
 
     // SHARING
@@ -189,11 +181,11 @@ var ANALYTICS = (function () {
     }
 
     var actOnFeaturedTweet = function(action, tweet_url) {
-        trackEvent('featured-tweet-action', action, null, tweet_url);
+        trackEvent('featured-tweet-action', action, null);
     }
 
     var actOnFeaturedFacebook = function(action, post_url) {
-        trackEvent('featured-facebook-action', action, null, post_url);
+        trackEvent('featured-facebook-action', action, null);
     }
 
     var copySummary = function() {
@@ -232,7 +224,7 @@ var ANALYTICS = (function () {
 
     var stopFullscreen = function() {
         trackEvent('fullscreen-stop');
-    }   
+    }
 
     var begin = function(location) {
         trackEvent('begin', location);
@@ -248,19 +240,23 @@ var ANALYTICS = (function () {
 
     var stopChromecast = function() {
         trackEvent('chromecast-stop');
-    }        
+    }
 
     // SLIDES
 
-    var exitSlide = function(slide_index, last_slide_exit_event) {
+    var exitSlide = function(slide_index) {
         var currentTime = new Date();
         timeOnLastSlide = Math.abs(currentTime - slideStartTime);
         slideStartTime = currentTime;
-        trackEvent('slide-exit', slide_index, timeOnLastSlide, last_slide_exit_event);
+        trackEvent('slide-exit', slide_index, timeOnLastSlide);
     }
 
+    setupGoogle();
+    setupComscore();
+    setupNielson();
+
     return {
-        'setupAll': setupAll,
+        'setupChartbeat': setupChartbeat,
         'trackEvent': trackEvent,
         'openShareDiscuss': openShareDiscuss,
         'closeShareDiscuss': closeShareDiscuss,
@@ -285,5 +281,3 @@ var ANALYTICS = (function () {
         'stopChromecast': stopChromecast
     };
 }());
-
-ANALYTICS.setupAll();

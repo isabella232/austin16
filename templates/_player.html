@@ -1,0 +1,49 @@
+<div class="player-container">
+    <div class="player-wrapper">
+        <div class="player">
+            <div id="audio-player" class="jp-jplayer"></div>
+            <div id="jp_container_1" class="jp-audio">
+                <div class="jp-type-single">
+                    <div class="gui">
+                        <div class="controls">
+                            <a href="javascript:;" class="back player-button" title="back"><span class="icon-backward"></a>
+
+                            <a href="javascript:;" class="play player-button" title="play"><span class="icon-play"></span></a>
+                            <a href="javascript:;" class="pause player-button" style="display: none;" title="pause"><span class="icon-pause"></span></a>
+
+                            <a class="skip player-button" href="#" data-toggle='tooltip' data-placement='top'><span class="icon-forward"></span></a>
+                        </div>
+                        <div class="jp-progress-container">
+                            <div class="current-time"></div>
+                            <div class="duration"></div>
+                            <div class="player-progress jp-progress">
+
+                                <div class="jp-play-bar bar"></div>
+                            </div>
+                        </div>
+                        <div class="song-info">
+                            <h2 class="artist"></h2>
+                            <h1 class="song-title"></h1>
+                        </div>
+                        <div class="playback-info">
+                            <p class="playlist-progress"><span class="played-songs"></span> of {{ total_songs }} songs played</p>
+                            <p class="favorites-count">Playing <span class="number-of-favorites"></span></p>
+                            <p class="skips"><span class="skips-remaining"></span></p>
+                        </div>
+
+                        <div class="play-toggle">
+                            <a href="#" class="play-favorites">
+                                <span class="label">Play favorites
+                                </span>
+                                <span class="icon-heart"></span>
+                            </a>
+                            <a href="#" class="play-all hide"><span class="label">Play all songs</span> <span class="fa fa-music"></span></a>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- end .jp-audio -->
+        </div> <!-- end #audio -->
+    </div>
+
+
+</div>

@@ -1,0 +1,84 @@
+<div class="song" id='song-<%= id %>'>
+    <div class="container-fluid">
+        <div class="song-info">
+            <div class="album-cover">
+                <img class="img-responsive" src="<%= APP_CONFIG.S3_BASE_URL%>/assets/img/bands/<%= song_art2 %>">
+
+                <div class="song-header visible-xs">
+                    <h2 class="artist"><%= artist %></h2>
+                    <h1 class="song-title">&lsquo;<%= title %>&rsquo;</h1>
+                </div>
+                <% if (castReceiver === null) { %>
+                <ul class="song-tools song-actions list-unstyled visible-xs">
+                    <li><a class="favorite"><span class="icon heart icon-heart-empty"></span> Favorite</a></li>
+                    <% if (!ENFORCE_PLAYBACK_LIMITS) { %>
+                    <li><a href="#" class="play-song-button"><span class="icon icon-play-circled"></span> Play</a></li>
+                    <% } %>
+                </ul>
+                <% } %>
+            </div>
+            <div class="song-info-wrapper">
+                <div class="song-header">
+                    <h2 class="artist"><%= artist %></h2>
+                    <h1 class="song-title">&lsquo;<%= title %>&rsquo;</h1>
+                </div>
+
+                <div class="review-wrapper">
+
+                    <% if (castReceiver === null) { %>
+                    <ul class="song-tools song-actions list-unstyled hidden-xs">
+                        <li><a class="favorite"><span class="icon heart icon-heart-empty"></span> Favorite</a></li>
+                        <% if (!ENFORCE_PLAYBACK_LIMITS) { %>
+                        <li><a href="#" class="play-song-button"><span class="icon icon-play-circled"></span> Play</a></li>
+                        <% } %>
+                    </ul>
+                    <% } %>
+
+                    <p class="hometown">Hometown: <%= hometown %></p>
+                    <p class="description"><%= description %> </p>
+                    <% if (learn_more_url) { %>
+                        <p class="website"><a href="<%= learn_more_url %>">Learn More <i class="fa fa-angle-double-right"></i></a></p>
+                    <% } %>
+
+                    <% if (castReceiver === null) { %>
+                    <% if (itunes||(!is_touch && DOWNLOADS_ALLOWED && download_url)||asin) { %>
+                    <h3>Get The Song</h3>
+                    <% } %>
+                    <ul class="song-tools song-links buy list-unstyled">
+                        <% if (DOWNLOADS_ALLOWED) { %>
+                        <li class="download-wrapper"><a target="_blank" href="<%= download_url %>" class="download"><span class="icon icon-download-cloud"></span> Download</a></li>
+                        <% } %>
+                        <% if (asin) { %>
+                        <li><a target="_blank" href="http://amazon.com/dp/<%= asin %>?tag=npr-5-20" class="amazon"><span class="icon icon-amazon"></span> Amazon</a></li>
+                        <% } %>
+                        <% if (itunes) { %>
+                        <li><a target="_blank" href="<%= itunes %>?at=11l79Y" class="itunes"><span class="icon icon-appstore"></span> iTunes</a></li>
+                        <% } %>
+                    </ul>
+                    <% if (rdio||spotify) { %>
+                    <h3>Stream</h3>
+                    <% } %>
+                    <ul class="song-tools song-links stream list-unstyled">
+                        <% if (rdio) { %>
+                        <li><a target="_blank" href="<%= rdio %>" class="rdio"><span class="icon icon-rdio"></span> Rdio</a></li>
+                        <% } %>
+                        <% if (spotify) { %>
+                        <li><a target="_blank" href="<%= spotify %>" class="spotify"><span class="icon icon-spotify-circled"></span> Spotify</a></li>
+                        <% } %>
+                    </ul>
+                    <% } %>
+                </div>
+
+
+                <% if (castReceiver === null) { %>
+                <ul class="song-tools song-tools-small list-unstyled">
+                    <li><a class="favorite"><span class="heart icon icon-heart-empty"></span></a></li>
+                    <% if (!ENFORCE_PLAYBACK_LIMITS) { %>
+                    <li><a href="#" class="play-song-button"><span class="icon icon-play-circled"></span></a></li>
+                    <% } %>
+                </ul>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>

@@ -54,22 +54,14 @@
                         <% if (itunes) { %>
                         <li><a target="_blank" href="<%= itunes %>?at=11l79Y" class="itunes"><span class="icon icon-appstore"></span> iTunes</a></li>
                         <% } %>
-                    </ul>
-                    <% if (rdio||spotify) { %>
-                    <h3>Stream</h3>
-                    <% } %>
-                    <ul class="song-tools song-links stream list-unstyled">
-                        <% if (rdio) { %>
-                        <li><a target="_blank" href="<%= rdio %>" class="rdio"><span class="icon icon-rdio"></span> Rdio</a></li>
-                        <% } %>
                         <% if (spotify) { %>
                         <li><a target="_blank" href="<%= spotify %>" class="spotify"><span class="icon icon-spotify-circled"></span> Spotify</a></li>
                         <% } %>
                     </ul>
+
                     <% } %>
                 </div>
-
-
+                
                 <% if (castReceiver === null) { %>
                 <ul class="song-tools song-tools-small list-unstyled">
                     <li><a class="favorite"><span class="heart icon icon-heart-empty"></span></a></li>

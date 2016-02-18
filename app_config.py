@@ -98,7 +98,7 @@ WELCOME_AUDIO = '/%s/assets/austin-intro.mp3' % PROJECT_SLUG
 
 SKIP_LIMIT = 6
 
-DOWNLOADS_ALLOWED = False
+DOWNLOADS_ALLOWED = True
 ENFORCE_PLAYBACK_LIMITS = False
 
 """

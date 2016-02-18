@@ -24,7 +24,8 @@
                         <a class="loading" href="#">Loading...</a>
                     </div>
                 </div>
-                <div class="chromecast-deck">
+                <!--NOTE Commenting this out for new because I'm not sure that this is 'Googlecast'-->
+                <!--<div class="chromecast-deck">
                     <div class="is-desktop-chrome">
                         <p class="get-extension">{{ COPY.content.get_extension }}<p>
                         <p class="start-chromecast">{{ COPY.content.chromecast_note }}</p>
@@ -34,12 +35,13 @@
                         <p class="is-touch">{{ COPY.content.is_touch }}</p>
                         <p class="is-not-chrome">{{ COPY.content.is_nonchrome_desktop }}</p>
                     </div>
-                </div>
+                </div>-->
                 <p class="language-advisory"><span class="fa fa-warning"></span> ADVISORY: Some of these songs contain explicit language.</p>
 
                 <p class="credits">By {{ COPY.content.music_credits}}</p>
                 <p class="credits">Design and Development by {{ COPY.content.viz_credits}}</p>
                 <p class="pubdate">{{ COPY.content.pubdate}}</p>
+                <p class="credits">{{ COPY.content.austin_2015}}</p>
             </div>
         </div>
     </div>
@@ -52,7 +54,7 @@
         <p class="tip-two">Turn down the lights</p>
         <p class="tip-three">Shuffling {{ total_songs }} songs</p>
 
-        <a class="skip-intro btn btn-default">Skip Intro</a>
+        <!--<a class="skip-intro btn btn-default">Skip Intro</a>-->
     </div>
 </div>
 
@@ -69,10 +71,10 @@
             <a class="" data-toggle="modal" data-backdrop="static" data-target="#share-modal"><span class="icon-share"></span> <span>Share</span></a>
         </div>
 
-        <div class="chromecast">
+        <!--<div class="chromecast">
             <a href="#" class="start"><span class="icon-cast"></span> Start Casting</a>
             <a href="#" class="stop"><span class="icon-cast-connected"></span> Stop Casting</a>
-        </div>
+        </div>-->
 
         <div class="fullscreen">
             <a href="#" class="start"><span class="icon-fullscreen"></span> Fullscreen</a>

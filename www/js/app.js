@@ -841,19 +841,7 @@ var swapTapeDeck = function() {
 
     _.delay(function() {
         $landing.find('.tip-one').removeClass('show');
-    }, 4000);
-
-    _.delay(function() {
-        $landing.find('.tip-two').addClass('show');
-    }, 5000);
-
-    _.delay(function() {
-        $landing.find('.tip-two').removeClass('show');
-    }, 9000);
-
-    _.delay(function() {
-        $landing.find('.tip-three').addClass('show');
-    }, 10000);
+    }, 30000);
 }
 
 /*

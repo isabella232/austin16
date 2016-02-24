@@ -294,6 +294,17 @@ h1,h2,h3,h4,h5,h6 {
 	.credits,
 	.pubdate {
 		font-size: 0.7rem;
+    max-width: 600px;
+    margin: 15px auto;
+
+    a {
+      color: @music-red-light;
+
+      &:hover {
+        text-decoration: none;
+        color: @music-red;
+      }
+    }
 	}
 
 	.tags-wrapper,
@@ -500,7 +511,7 @@ h1,h2,h3,h4,h5,h6 {
 	.no-touch & {
 		&:hover {
 			text-decoration: none;
-			background-color: lighten(@music-red-light, 10%);
+			background-color: @music-red;
 			color: @white;
 		}
 	}
@@ -551,6 +562,7 @@ h1,h2,h3,h4,h5,h6 {
 	@media screen and (max-width: @screen-xs-max){
 		position: absolute;
 		padding: 0 @grid-gutter-width / 2;
+    height: 5rem;
 	}
 
 	.logo,
@@ -561,6 +573,23 @@ h1,h2,h3,h4,h5,h6 {
 		vertical-align: middle;
 		margin: 0 1rem 0 0;
 	}
+
+  .support {
+    font-size: @font-size-base * .6;
+    display: inline-block;
+    position: relative;
+    top: 30%;
+    margin: 0 0 0 10px;
+    font-color: @gray-medium;
+
+    p {
+      opacity: .7;
+    }
+  }
+
+  .branding {
+    float: left;
+  }
 
     .play-toggle,
 	.full-list,

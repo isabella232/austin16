@@ -65,10 +65,6 @@ def clean_songs(verify):
 
             print '%s - %s' % (row['artist'], row['title'])
 
-            if row['song_art']:
-                name, ext = os.path.splitext(row['song_art'])
-                row['song_art'] = '%s-s500%s' % (name, ext)
-
             if row['title']:
                 row['title'] = smartypants(row['title'])
 

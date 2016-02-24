@@ -39,15 +39,19 @@
 <!--     <div class="poster-static">
     </div> -->
     <div class="poster">
-        <p class="tip-one">Turn up your volume</p>
-        <p class="tip-two">Turn down the lights</p>
-        <p class="tip-three">Shuffling {{ total_songs }} songs</p>
+        <p class="tip-one"><iframe frameborder="no" width="100%" style="height: 100vh;" src="http://www.npr.org/spt/austin100/titos/"></iframe></p>
     </div>
 </div>
 
 <div class="fixed-header">
-    <a target="_blank" href="http://npr.org/music"><img class="logo img-responsive" src="http://media.npr.org/chrome/music/music-logo.svg"></a>
-    <h1 class="title">{{ COPY.content.brand }}</h1>
+    <div class="branding">
+      <a target="_blank" href="http://npr.org/music"><img class="logo img-responsive" src="http://media.npr.org/chrome/music/music-logo.svg"></a>
+      <h1 class="title">{{ COPY.content.brand }}</h1>
+    </div>
+
+    <div class="support">
+      <p>{{ COPY.content.header_sponsorship }}</p>
+    </div>
 
     <div class="fixed-header-controls">
         <div class="full-list">

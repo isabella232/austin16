@@ -94,8 +94,6 @@ Austin 100 specific
 CHROMECAST_APP_ID = None
 CHROMECAST_NAMESPACE = 'urn:x-cast:nprviz.austin'
 
-WELCOME_AUDIO = '/%s/assets/austin-intro.mp3' % PROJECT_SLUG
-
 SKIP_LIMIT = 6
 
 DOWNLOADS_ALLOWED = True
@@ -203,7 +201,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         CHROMECAST_APP_ID = '6122CF9A'
-        WELCOME_AUDIO = '/%s/assets/austin-intro.mp3' % PROJECT_SLUG
+        WELCOME_AUDIO = '/%s/assets/titossponsor.mp3' % PROJECT_SLUG
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = 'http://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
@@ -215,7 +213,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         CHROMECAST_APP_ID = '649AB354'
-        WELCOME_AUDIO = '/%s/assets/austin-intro.mp3' % PROJECT_SLUG
+        WELCOME_AUDIO = '/%s/assets/titossponsor.mp3' % PROJECT_SLUG
     else:
         S3_BUCKET = None
         S3_BASE_URL = 'http://127.0.0.1:8000'
@@ -227,7 +225,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         CHROMECAST_APP_ID = '649AB354'
-        WELCOME_AUDIO = '/assets/austin-intro.mp3'
+        WELCOME_AUDIO = '/assets/titossponsor.mp3'
 
     DEPLOYMENT_TARGET = deployment_target
 

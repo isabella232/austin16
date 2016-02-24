@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="song-info">
             <div class="album-cover">
-                <img class="img-responsive" src="<%= APP_CONFIG.S3_BASE_URL%>/assets/img/bands/<%= song_art2 %>">
+                <img class="img-responsive" src="<%= APP_CONFIG.S3_BASE_URL%>/assets/img/bands/<%= song_art %>">
 
                 <div class="song-header visible-xs">
                     <h2 class="artist"><%= artist %></h2>
@@ -61,7 +61,7 @@
 
                     <% } %>
                 </div>
-                
+
                 <% if (castReceiver === null) { %>
                 <ul class="song-tools song-tools-small list-unstyled">
                     <li><a class="favorite"><span class="heart icon icon-heart-empty"></span></a></li>

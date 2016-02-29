@@ -20,6 +20,7 @@ from twitter import Twitter, OAuth
 import app_config
 import copytext
 from flat import deploy_file
+import utils
 
 @task(default=True)
 def update():
@@ -143,10 +144,10 @@ def update_downloads():
                         f.write(chunk)
                         f.flush()
 
-            s3 = boto.connect_s3()
+            bucket = utils.get_bucket(app_config.S3_BUCKET)
 
             deploy_file(
-                s3,
+                bucket,
                 'downloads/%s' % filename,
                 '%s/downloads/%s' % (app_config.PROJECT_SLUG, filename),
                 headers={

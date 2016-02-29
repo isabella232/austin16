@@ -561,8 +561,8 @@ h1,h2,h3,h4,h5,h6 {
 
 	@media screen and (max-width: @screen-xs-max){
 		position: absolute;
-		padding: 0 @grid-gutter-width / 2;
-    height: 5rem;
+    height: 7rem;
+    text-align: center;
 	}
 
 	.logo,
@@ -572,6 +572,10 @@ h1,h2,h3,h4,h5,h6 {
 		line-height: 4rem;
 		vertical-align: middle;
 		margin: 0 1rem 0 0;
+
+    @media screen and (max-width: @screen-xs-max){
+      margin: 0 auto;
+    }
 	}
 
   .support {
@@ -579,16 +583,32 @@ h1,h2,h3,h4,h5,h6 {
     display: inline-block;
     position: relative;
     top: 30%;
-    margin: 0 0 0 10px;
+    margin: 0 auto;
     font-color: @gray-medium;
+
+    .logo {
+      display: inline;
+      height: 20px;
+      width: auto;
+      margin: 0 0 0 5px;
+    }
 
     p {
       opacity: .7;
+    }
+
+    @media screen and (max-width: @screen-xs-max){
+      font-size: @font-size-base * .9;
+      margin: 0 auto;
     }
   }
 
   .branding {
     float: left;
+
+    @media screen and (max-width: @screen-xs-max){
+      float: none;
+    }
   }
 
     .play-toggle,
@@ -800,6 +820,10 @@ h1,h2,h3,h4,h5,h6 {
 	background: repeating-radial-gradient(circle at 0 0, #121b21, #19232b 7rem);
 	padding-top: 4rem;
 	padding-bottom: 6rem;
+
+  @media screen and (max-width: @screen-xs-max){
+    padding-top: 7.8rem;
+  }
 }
 
 .song {

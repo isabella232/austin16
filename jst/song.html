@@ -37,12 +37,12 @@
                     <p class="hometown">Hometown: <%= hometown %></p>
                     <p class="description"><%= description %> </p>
                     <% if (learn_more_url) { %>
-                        <p class="website"><a href="<%= learn_more_url %>">Learn More <i class="fa fa-angle-double-right"></i></a></p>
+                        <p class="website"><a target="_blank" href="<%= learn_more_url %>">Learn More <i class="fa fa-angle-double-right"></i></a></p>
                     <% } %>
 
                     <% if (castReceiver === null) { %>
                     <% if (itunes||(!is_touch && DOWNLOADS_ALLOWED && download_url)||asin) { %>
-                    <h3>Get The Song</h3>
+                    <h3 class="get-the-song">Get The Song</h3>
                     <% } %>
                     <ul class="song-tools song-links buy list-unstyled">
                         <% if (DOWNLOADS_ALLOWED) { %>

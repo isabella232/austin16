@@ -50,6 +50,9 @@
     {{ JS.render('js/app-footer.min.js') }}
 
     {% block extra_foot %}
+      <script type="text/javascript">
+        ANALYTICS.setupChartbeat()
+      </script>
     {% endblock extra_foot %}
 </body>
 </html>

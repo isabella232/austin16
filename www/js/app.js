@@ -905,9 +905,20 @@ var toggleHistoryButton = function(e) {
  * Begin shuffled playback from the landing screen.
  */
 var onGoButtonClick = function(e) {
-    e.preventDefault();
-
     ANALYTICS.begin('go');
+    rollAdAndPlay(e);
+}
+
+/*
+ * Resume listening from the landing screen.
+ */
+var onContinueButtonClick = function(e) {
+    ANALYTICS.begin('welcome-back');
+    rollAdAndPlay(e);
+}
+
+var rollAdAndPlay = function(e) {
+    e.preventDefault();
 
     swapTapeDeck();
     $songs.find('.song').remove();
@@ -915,24 +926,6 @@ var onGoButtonClick = function(e) {
 
     if (PLAY_LAST) {
         nextSongID = songOrder[songOrder.length - 1];
-    }
-}
-
-/*
- * Resume listening from the landing screen.
- */
-var onContinueButtonClick = function(e) {
-    e.preventDefault();
-
-    ANALYTICS.begin('welcome-back');
-
-    $landing.velocity('fadeOut');
-
-    if (PLAY_LAST) {
-        nextSongID = songOrder[songOrder.length - 1];
-        playNextSong(nextSongID);
-    } else {
-        playNextSong();
     }
 }
 

@@ -1220,7 +1220,7 @@ h1,h2,h3,h4,h5,h6 {
 		&.song-actions,
 		&.song-links {
 			li {
-				display: block;
+				display: none;
 				width: 50%;
 				float: left;
 			}
@@ -1749,6 +1749,11 @@ h1,h2,h3,h4,h5,h6 {
 
 	.play-toggle {
 		right: 0.5rem;
+    display: block;
+
+    @media screen and (max-width: @screen-xs-max){
+      display: none;
+    }
 
 	    .label {
 	    	font-size: @font-size-base * 0.785;
